@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>ROKUNN LAT S.A</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script> -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/deecb3ce02.js" crossorigin="anonymous"></script>
+
+    <!-- Mis estilos CSS -->
+    <link rel="stylesheet" href="{% static 'tienda/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="background-color: #7C4B4B;">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'sitio/img/logo.jpg' %}"  alt="" width="30" height="24">
+        </a>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'tienda:home' %}">ROKUNN LAT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'tienda:home' %} ">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'tienda:acerca' %} " class="nav-link active">Acerca de</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="mailto: contacto@rokunn.com" class="nav-link active">Contacto</a>
+                    </li>
+                    {% if perms.TIENDA.add_producto %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'tienda:agregar' %}">Agregar productos</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Categorias
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for cat in categoria %}
+                            <li><a class="dropdown-item" href="{% url 'tienda:categorias' cat.id %} ">{{cat.nombre}}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="dropdown">
+                    {% if user.is_authenticated %}
+                    Bienvenido!
+                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{user.username}}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item btn btn-warning" href="{% url 'logout' %} ">Salir </a></li>
+                    </ul>
+                    {% else %}
+                    <div class="d-grid gap-2 d-md-block">
+                        <button class="btn btn-outline-success" type="button"><a
+                                href=" {% url 'login' %} ">Ingresar</a></button>
+                        <button class="btn btn-outline-info" type="button"><a
+                                href=" {% url 'USUARIOS:registrarse' %} ">Registrarse</a></button>
+                    </div>
+                    {% endif %}
+                </div>
+
+                &NonBreakingSpace;
+                <form action="{% url 'tienda:buscar' %}" method="get">
+                    <input name="buscar" type="text" placeholder="buscar...">
+                    <button type="submit" class="btn btn-outline-info">Buscar</button>
+                </form>
+                &NonBreakingSpace;
+
+                <img src="{% static 'sitio/img/carrito-de-compras.png' %}"style="max-width: 25px;" alt=""
+                    srcset="">
+                <div class="" style="border-radius: 25%;  max-width: 55px; min-width: 25px ">
+                    <p class="font-weight-bold text-center"
+                        style="background-color: rgb(253, 0, 84); border-radius:50%; margin-top:2px ">
+                        {{cantidad_productos}}
+                    </p>
+                </div>
+                <a href=" {% url 'tienda:checkout' %} " class="btn btn-secondary">Carrito </a>
+
+                &NonBreakingSpace;
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block body %}
+        {% endblock body %}
+    </div>
+
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+            <div class="footer-copyright text-center py-2 text-primary">
+                © 2023 ROKURR LAT
+                <a href="mailto: angeles3890@gmail.com">Todos los derechos Reservados / Andres Cunier - Adriana Rodriguez</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+{% extends "tienda/layout.html" %}
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <div class="card mx-auto" style="max-width: 400px;"> <!-- Se añadió el estilo mx-auto para centrar horizontalmente -->
+                <h3 class="card-header text-center">Formulario de Registro</h3>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for campo in form %}
+                            <p>
+                                {{ campo.label_tag }}<br>
+                                {{ campo }}
+                                {% if campo.help_text %}
+                                    <small style="color: gray;">{{ campo.help_text }}</small>
+                                {% endif %}
+                                {% for error in campo.errors %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endfor %}
+                            </p>
+                        {% endfor %}
+
+                        <button type="submit" class="btn btn-primary">Confirmar Registro</button>
+                        <button type="reset" class="btn btn-secondary">Resetear campos</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
