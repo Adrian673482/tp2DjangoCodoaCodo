@@ -1,0 +1,6 @@
+[proyect]
+name = "Tp2Tienda"
+version = "1.0.0"
+
+[env]
+PORT = 8080

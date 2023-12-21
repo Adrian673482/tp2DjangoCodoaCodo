@@ -1,17 +1,17 @@
-{% load static %}
+ {% load static %}
+ 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>ROKUNN LAT S.A</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script> -->
+
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/deecb3ce02.js" crossorigin="anonymous"></script>
@@ -22,85 +22,80 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="background-color: #7C4B4B;">
-        <a class="navbar-brand" href="#">
-            <img src="{% static 'sitio/img/logo.jpg' %}"  alt="" width="30" height="24">
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'sitio/imag/logo.jpg' %}" alt="" width="30" height="24">
+            </a>
             <a class="navbar-brand" href="{% url 'tienda:home' %}">ROKUNN LAT</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'tienda:home' %} ">Home</a>
+                        <a class="nav-link active" href="{% url 'tienda:home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'tienda:acerca' %} " class="nav-link active">Acerca de</a>
+                        <a class="nav-link" href="{% url 'tienda:acerca' %}">Acerca de</a>
                     </li>
                     <li class="nav-item">
-                        <a href="mailto: contacto@rokunn.com" class="nav-link active">Contacto</a>
+                        <a class="nav-link" href="mailto:contacto@rokunn.com">Contacto</a>
                     </li>
                     {% if perms.TIENDA.add_producto %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tienda:agregar' %}">Agregar productos</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'tienda:agregar' %}">Agregar productos</a>
+                        </li>
                     {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Categorias
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {% for cat in categoria %}
-                            <li><a class="dropdown-item" href="{% url 'tienda:categorias' cat.id %} ">{{cat.nombre}}</a>
-                            </li>
+                                <a class="dropdown-item" href="{% url 'tienda:categorias' cat.id %}">{{ cat.nombre }}</a>
                             {% endfor %}
-                        </ul>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'tienda:categorias' 1 %}">Microfonos</a>
+                            <a class="dropdown-item" href="{% url 'tienda:categorias' 2 %}">Webcams</a>
+                            <a class="dropdown-item" href="{% url 'tienda:categorias' 3 %}">Parlantes</a>
+                        </div>
                     </li>
                 </ul>
 
                 <div class="dropdown">
                     {% if user.is_authenticated %}
-                    Bienvenido!
-                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        {{user.username}}
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item btn btn-warning" href="{% url 'logout' %} ">Salir </a></li>
-                    </ul>
+                        Bienvenido!
+                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ user.username }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <a class="dropdown-item btn btn-warning" href="{% url 'logout' %}">Salir</a>
+                        </div>
                     {% else %}
-                    <div class="d-grid gap-2 d-md-block">
-                        <button class="btn btn-outline-success" type="button"><a
-                                href=" {% url 'login' %} ">Ingresar</a></button>
-                        <button class="btn btn-outline-info" type="button"><a
-                                href=" {% url 'USUARIOS:registrarse' %} ">Registrarse</a></button>
-                    </div>
+                        <div class="d-grid gap-2 d-md-block">
+                            <button class="btn btn-outline-success" type="button"><a
+                                    href="{% url 'login' %}">Ingresar</a></button>
+                            <button class="btn btn-outline-info" type="button"><a
+                                    href="{% url 'USUARIOS:registrarse' %}">Registrarse</a></button>
+                        </div>
                     {% endif %}
                 </div>
 
-                &NonBreakingSpace;
-                <form action="{% url 'tienda:buscar' %}" method="get">
-                    <input name="buscar" type="text" placeholder="buscar...">
-                    <button type="submit" class="btn btn-outline-info">Buscar</button>
+                <form class="form-inline my-2 my-lg-0" action="{% url 'tienda:buscar' %}" method="get">
+                    <input class="form-control mr-sm-2" type="search" placeholder="buscar..." name="buscar">
+                    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
                 </form>
-                &NonBreakingSpace;
 
-                <img src="{% static 'sitio/img/carrito-de-compras.png' %}"style="max-width: 25px;" alt=""
-                    srcset="">
-                <div class="" style="border-radius: 25%;  max-width: 55px; min-width: 25px ">
-                    <p class="font-weight-bold text-center"
-                        style="background-color: rgb(253, 0, 84); border-radius:50%; margin-top:2px ">
-                        {{cantidad_productos}}
-                    </p>
+                <img src="{% static 'sitio/img/carrito-de-compras.png' %}" style="max-width: 25px;" alt="">
+                <div class="rounded-circle" style="background-color: rgb(253, 0, 84); width: 25px; height: 25px; margin-top: 2px; text-align: center;">
+                    <p class="font-weight-bold text-white m-0">{{ cantidad_productos }}</p>
                 </div>
-                <a href=" {% url 'tienda:checkout' %} " class="btn btn-secondary">Carrito </a>
-
-                &NonBreakingSpace;
+                <a href="{% url 'tienda:checkout' %}" class="btn btn-secondary ml-2">Carrito</a>
             </div>
         </div>
     </nav>
@@ -119,7 +114,7 @@
         <div class="container">
             <div class="footer-copyright text-center py-2 text-primary">
                 © 2023 ROKURR LAT
-                <a href="mailto: angeles3890@gmail.com">Todos los derechos Reservados / Andres Cunier - Adriana Rodriguez</a>
+                <a href="mailto:angeles3890@gmail.com">Todos los derechos Reservados / Andres Cunier - Adriana Rodriguez</a>
             </div>
         </div>
     </footer>
@@ -129,8 +124,15 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 </body>
 
 </html>
+
+   
